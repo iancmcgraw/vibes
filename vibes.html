@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conversation Log: Poker Data Scraper Development</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Warm Neutrals -->
+    <!-- Application Structure Plan: A linear, chronological presentation of the entire dialogue. Each user query is clearly marked and followed by a concise summary of Gemini's response. This structure provides a straightforward, easy-to-follow narrative of the problem-solving and development process, allowing the user to review each step and its resolution sequentially. It's chosen for its clarity and directness in showcasing the iterative nature of the collaboration. -->
+    <!-- Visualization & Content Choices: Dialogue turns are presented as plain text within dedicated sections (Inform). Code snippets from user queries are shown in pre-formatted blocks. My responses are summarized to highlight the key action or solution provided. No complex visualizations are used, as the primary goal is presenting the dialogue itself, emphasizing the conversational flow and problem-solution pairs. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #F5F5F5; /* Warm Neutral - Light Gray */
+            color: #374151; /* Dark Gray Text */
+        }
+        .dialogue-card {
+            background-color: #FFFFFF;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        .user-query {
+            background-color: #F3F4F6; /* Light gray for query background */
+            padding: 1rem;
+            border-radius: 0.5rem;
+            margin-bottom: 1rem;
+            border-left: 4px solid #DC2626; /* Accent color for user query */
+        }
+        .gemini-response-summary {
+            background-color: #EBF4F5; /* Slightly bluish-gray for response summary */
+            padding: 1rem;
+            border-radius: 0.5rem;
+            margin-bottom: 1rem;
+            border-left: 4px solid #10B981; /* Green accent for response */
+        }
+        .code-block-inner {
+            background-color: #E5E7EB; /* Lighter gray for embedded code */
+            padding: 0.75rem;
+            border-radius: 0.375rem;
+            font-family: monospace;
+            /* Changed from pre-wrap to pre to prevent word-wrapping */
+            white-space: pre; 
+            word-wrap: normal; /* Ensure words don't break if no whitespace */
+            color: #111827;
+            overflow-x: auto; /* Enable horizontal scrollbar */
+        }
+        .final-script-container {
+            background-color: #FFFFFF;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <div class="container mx-auto px-4 py-8 md:py-12">
+        <header class="text-center mb-10">
+            <h1 class="text-4xl md:text-5xl font-bold text-gray-800">Our Collaboration Journey</h1>
+            <p class="text-lg md:text-xl text-gray-600 mt-2">Building a Poker Data Scraper with Gemini</p>
+        </header>
+
+        <main>
+            <div class="dialogue-card">
+                <h2 class="text-2xl font-bold mb-4">Turn 1: Initial Problem Statement</h2>
+                <div class="user-query">
+                    <p class="font-semibold mb-2">User Query:</p>
+                    <div class="code-block-inner">
+I have a bunch of emails in my gmail account of the form:
+--------------
+Results 0531:
+
+@Adam-Cohen-2 requests $209.71 from:
+    $152.72 @Twentysix (web)
+    $56.99 @Ankit-Mehta-19 (web)
+
+@akshaymiterani requests $402.43 from:
+    $262.89 @Ashish-arora-6 (web)
+    $139.54 @Ankit-Mehta-19 (web)
+--------------
+
+These are poker winnings (and losings) for the players (named with @name).
+
+Please generate for me all the python code needed to scrape the email contents using the GMail API, and then sum together the winnings/losings for each player.
+                    </div>
+                </div>
+                <div class="gemini-response-summary">
+                    <p class="font-semibold mb-2">Gemini's Response Summary:</p>
+                    <p>Generated a complete Python script to **scrape Gmail using the Gmail API**, **parse poker results**, and **sum winnings/losings for each player**, based on the initial email format.</p>
+                </div>
+            </div>
+
+            <div class="dialogue-card">
+                <h2 class="text-2xl font-bold mb-4">Turn 2: Library Installation on Mac</h2>
+                <div class="user-query">
+                    <p class="font-semibold mb-2">User Query:</p>
+                    <p>How do I install the necessary libraries on a mac?</p>
+                </div>
+                <div class="gemini-response-summary">
+                    <p class="font-semibold mb-2">Gemini's Response Summary:</p>
+                    <p>Provided **step-by-step instructions on how to install necessary Python libraries** (`google-api-python-client`, `google-auth-httplib2`, `google-auth-oauthlib`) on a Mac using `pip`.</p>
+                </div>
+            </div>
+
+            <div class="dialogue-card">
+                <h2 class="text-2xl font-bold mb-4">Turn 3: Checking Installed Libraries</h2>
+                <div class="user-query">
+                    <p class="font-semibold mb-2">User Query:</p>
+                    <p>How do I check if the libraries are already installed</p>
+                </div>
+                <div class="gemini-response-summary">
+                    <p class="font-semibold mb-2">Gemini's Response Summary:</p>
+                    <p>Explained **two methods to check installed libraries**: importing them in a Python interpreter and using `pip list` commands.</p>
+                </div>
+            </div>
+
+            <div class="dialogue-card">
+                <h2 class="text-2xl font-bold mb-4">Turn 4: OAuth Consent Screen Inquiry</h2>
+                <div class="user-query">
+                    <p class="font-semibold mb-2">User Query:</p>
+                    <p>Do I need to configure a consent screen before i can download credentials.json?</p>
+                </div>
+                <div class="gemini-response-summary">
+                    <p class="font-semibold mb-2">Gemini's Response Summary:</p>
+                    <p>Confirmed that configuring an **OAuth consent screen is mandatory before downloading `credentials.json`** and explained the reasoning and basic setup steps.</p>
+                </div>
+            </div>
+
+            <div class="dialogue-card">
+                <h2 class="text-2xl font-bold mb-4">Turn 5: "Unverified App" Error</h2>
+                <div class="user-query">
+                    <p class="font-semibold mb-2">User Query:</p>
+                    <p>I tried to create a new project, but now I get "Poker Scraping App has not completed the Google verification process."</p>
+                </div>
+                <div class="gemini-response-summary">
+                    <p class="font-semibold mb-2">Gemini's Response Summary:</p>
+                    <p>Diagnosed the "unverified app" message as a security warning and provided two solutions: **adding the user as a "Test User"** (recommended for personal use) or submitting the app for full Google verification.</p>
+                </div>
+            </div>
+
+            <div class="dialogue-card">
+                <h2 class="text-2xl font-bold mb-4">Turn 6: Clearing OAuth for New User</h2>
+                <div class="user-query">
+                    <p class="font-semibold mb-2">User Query:</p>
+                    <p>How do I clear the oauth so that I can rerun as a different test user?</p>
+                </div>
+                <div class="gemini-response-summary">
+                    <p class="font-semibold mb-2">Gemini's Response Summary:</p>
+                    <p>Explained how to clear existing OAuth credentials by **deleting the `token.pickle` file**, which forces a new authentication flow allowing a different test user to log in.</p>
+                </div>
+            </div>
+
+            <div class="dialogue-card">
+                <h2 class="text-2xl font-bold mb-4">Turn 7: Printing Email Subjects</h2>
+                <div class="user-query">
+                    <p class="font-semibold mb-2">User Query:</p>
+                    <p>How do I print the subject of the emails in the 'messages' variable?</p>
+                </div>
+                <div class="gemini-response-summary">
+                    <p class="font-semibold mb-2">Gemini's Response Summary:</p>
+                    <p>Modified the `main` function to **fetch full message details and extract/print the subject** of each email using `msg['payload']['headers']`.</p>
+                </div>
+            </div>
+
+            <div class="dialogue-card">
+                <h2 class="text-2xl font-bold mb-4">Turn 8: Skipping Irrelevant Content</h2>
+                <div class="user-query">
+                    <p class="font-semibold mb-2">User Query:</p>
+                    <p>Redo the 'main' function so that if the relevant content is not found, the email is skipped.</p>
+                </div>
+                <div class="gemini-response-summary">
+                    <p class="font-semibold mb-2">Gemini's Response Summary:</p>
+                    <p>Refactored the `main` function to **explicitly skip emails where the poker results content** (`Results \d{4}:\s*\n*(.*)`) is not found, ensuring more robust processing.</p>
+                </div>
+            </div>
+
+            <div class="dialogue-card">
+                <h2 class="text-2xl font-bold mb-4">Turn 9: Code Decomposition</h2>
+                <div class="user-query">
+                    <p class="font-semibold mb-2">User Query:</p>
+                    <p>that's good, but can you decompose it into more functions to make it more readable?</p>
+                </div>
+                <div class="gemini-response-summary">
+                    <p class="font-semibold mb-2">Gemini's Response Summary:</p>
+                    <p>**Decomposed the `main` function into smaller, more focused functions** (`fetch_initial_message_metas`, `extract_email_info`, `process_single_email_for_poker_data`) to improve readability and maintainability.</p>
+                </div>
+            </div>
+
+            <div class="dialogue-card">
+                <h2 class="text-2xl font-bold mb-4">Turn 10: Ignoring Extraneous Links in Data Format</h2>
+                <div class="user-query">
+                    <p class="font-semibold mb-2">User Query:</p>
+                    <div class="code-block-inner">
+The actual text we want to parse looks more like:
+
+@Akshit-Poddar &lt;https://venmo.com/u/Akshit-Poddar&gt; requests $2.24 from:
+    $2.24 @stephen-plutsky
+&lt;https://account.venmo.com/?txn=charge&audience=private&recipients=stephen-plutsky&amount=2.24&note=071925&gt;
+
+Please rewrite the parsing code to ignore all extraneous links.
+                    </div>
+                </div>
+                <div class="gemini-response-summary">
+                    <p class="font-semibold mb-2">Gemini's Response Summary:</p>
+                    <p>Updated the `parse_poker_results` function by refining regular expressions with **non-capturing optional groups (`(?: <[^>]+?>)?`) to ignore extraneous links** in the email content.</p>
+                </div>
+            </div>
+
+            <div class="dialogue-card">
+                <h2 class="text-2xl font-bold mb-4">Turn 11: Adding Debugging Lines</h2>
+                <div class="user-query">
+                    <p class="font-semibold mb-2">User Query:</p>
+                    <p>Add some lines for easy debugging</p>
+                </div>
+                <div class="gemini-response-summary">
+                    <p class="font-semibold mb-2">Gemini's Response Summary:</p>
+                    <p>Added **comprehensive `print()` statements tagged with `[DEBUG]`, `[ERROR]`, and `[WARNING]`** throughout the code for easier debugging and tracing execution flow.</p>
+                </div>
+            </div>
+
+            <div class="dialogue-card">
+                <h2 class="text-2xl font-bold mb-4">Turn 12: Confirming Accounting Rules</h2>
+                <div class="user-query">
+                    <p class="font-semibold mb-2">User Query:</p>
+                    <div class="code-block-inner">
+Results are of the form:
+
+@player1 requests X from:
+Y @player2 (web)
+Z @player3 (web)
+
+We should add X to @player1's total and we should subtract Y from @player2's total. We should subtract Z from @player3's total.
+
+Rewrite the code to follow these rules.
+                    </div>
+                </div>
+                <div class="gemini-response-summary">
+                    <p class="font-semibold mb-2">Gemini's Response Summary:</p>
+                    <p>Confirmed that the `parse_poker_results` function **already correctly implements the requested accounting rules** (adding to requesters, subtracting from contributors) and no changes were needed to the logic.</p>
+                </div>
+            </div>
+
+            <div class="dialogue-card">
+                <h2 class="text-2xl font-bold mb-4">Turn 13: Contributor Name Truncation Bug</h2>
+                <div class="user-query">
+                    <p class="font-semibold mb-2">User Query:</p>
+                    <p>There's a bug where the names of the contributors (some of the keys in the daily_results) are only showing the first letter.</p>
+                </div>
+                <div class="gemini-response-summary">
+                    <p class="font-semibold mb-2">Gemini's Response Summary:</p>
+                    <p>Fixed a bug where contributor names were truncated by changing the regex quantifier from non-greedy `+?` to **greedy `+` (`([\w-]+)`) for player name capture** in `contribution_pattern`.</p>
+                </div>
+            </div>
+
+            <div class="dialogue-card">
+                <h2 class="text-2xl font-bold mb-4">Turn 14: "No contribution match" Error</h2>
+                <div class="user-query">
+                    <p class="font-semibold mb-2">User Query:</p>
+                    <div class="code-block-inner">
+The line:
+
+ $2.24 @stephen-plutsky
+
+Results in:
+
+No contribution match, ending current request block.
+
+What's going wrong?
+                    </div>
+                </div>
+                <div class="gemini-response-summary">
+                    <p class="font-semibold mb-2">Gemini's Response Summary:</p>
+                    <p>Addressed a regex matching issue for contribution lines by **changing `\t` to `\s*`** in the `contribution_pattern` to account for flexible leading whitespace.</p>
+                </div>
+            </div>
+
+            <div class="dialogue-card">
+                <h2 class="text-2xl font-bold mb-4">Turn 15: Flexible Digit Matching</h2>
+                <div class="user-query">
+                    <p class="font-semibold mb-2">User Query:</p>
+                    <p>Rewrite the code so that process_single_email_for_poker_data takes into account 4-6 numbers rather than just \d{4}.</p>
+                </div>
+                <div class="gemini-response-summary">
+                    <p class="font-semibold mb-2">Gemini's Response Summary:</p>
+                    <p>Modified the regex for the "Results XXXX:" pattern in `process_single_email_for_poker_data` to `\d{4,6}`, allowing it to match **4 to 6 digits** instead of exactly 4.</p>
+                </div>
+            </div>
+
+            <div class="dialogue-card">
+                <h2 class="text-2xl font-bold mb-4">Turn 16: Full Code Regeneration (with Debugging Removed)</h2>
+                <div class="user-query">
+                    <p class="font-semibold mb-2">User Query:</p>
+                    <p>write the whole file</p>
+                </div>
+                <div class="gemini-response-summary">
+                    <p class="font-semibold mb-2">Gemini's Response Summary:</p>
+                    <p>Provided the complete Python file, incorporating all previous changes and **removing the detailed debug print lines**, leaving only the subject and pretty-printed daily results.</p>
+                </div>
+            </div>
+
+            <div class="dialogue-card">
+                <h2 class="text-2xl font-bold mb-4">Turn 17: Specific Subject Search (with "-Fwd")</h2>
+                <div class="user-query">
+                    <p class="font-semibold mb-2">User Query:</p>
+                    <p>Search for the subject '"Cash Game Tonight" -Fwd'</p>
+                </div>
+                <div class="gemini-response-summary">
+                    <p class="font-semibold mb-2">Gemini's Response Summary:</p>
+                    <p>Modified the `fetch_initial_message_metas` function call in `main` to **search for the exact subject `"Cash Game Tonight" -Fwd`** to specifically filter for that subject.</p>
+                </div>
+            </div>
+
+            <div class="dialogue-card">
+                <h2 class="text-2xl font-bold mb-4">Turn 18: Removing "-Fwd" from Subject Search</h2>
+                <div class="user-query">
+                    <p class="font-semibold mb-2">User Query:</p>
+                    <p>Remove the -Fwd from the subject search</p>
+                </div>
+                <div class="gemini-response-summary">
+                    <p class="font-semibold mb-2">Gemini's Response Summary:</p>
+                    <p>Refined the search query in `main` to **`subject:"Cash Game Tonight"`**, removing the `-Fwd` filter as requested.</p>
+                </div>
+            </div>
+
+            <div class="dialogue-card">
+                <h2 class="text-2xl font-bold mb-4">Turn 19: Date Filter (May 31st)</h2>
+                <div class="user-query">
+                    <p class="font-semibold mb-2">User Query:</p>
+                    <p>Only process emails since May 31st</p>
+                </div>
+                <div class="gemini-response-summary">
+                    <p class="font-semibold mb-2">Gemini's Response Summary:</p>
+                    <p>Added a date filter to the search query in `main`: **`after:2025/05/31`**, to process only emails received after that date.</p>
+                </div>
+            </div>
+
+            <div class="dialogue-card">
+                <h2 class="text-2xl font-bold mb-4">Turn 20: Date Filter (July 1st)</h2>
+                <div class="user-query">
+                    <p class="font-semibold mb-2">User Query:</p>
+                    <p>Make that 2025/07/01.</p>
+                </div>
+                <div class="gemini-response-summary">
+                    <p class="font-semibold mb-2">Gemini's Response Summary:</p>
+                    <p>Updated the date filter in the search query to **`after:2025/07/01`** for the most current data.</p>
+                </div>
+            </div>
+
+            <div class="dialogue-card">
+                <h2 class="text-2xl font-bold mb-4">Turn 21: Initial Webpage Request</h2>
+                <div class="user-query">
+                    <p class="font-semibold mb-2">User Query:</p>
+                    <p>Make a webpage that has each dialogue turn verbatim followed by a summary of the response to that turn.</p>
+                </div>
+                <div class="gemini-response-summary">
+                    <p class="font-semibold mb-2">Gemini's Response Summary:</p>
+                    <p>Generated the **first version of the interactive webpage**, designed with a **tabbed interface** to present the development journey of the poker scraper, showcasing different phases and a summary chart.</p>
+                </div>
+            </div>
+
+            <div class="dialogue-card">
+                <h2 class="text-2xl font-bold mb-4">Turn 22: Single-Page Webpage Request (No Tabs)</h2>
+                <div class="user-query">
+                    <p class="font-semibold mb-2">User Query:</p>
+                    <p>Put all the dialogue turns in a single page (don't use tabs like you currently are doing).</p>
+                </div>
+                <div class="gemini-response-summary">
+                    <p class="font-semibold mb-2">Gemini's Response Summary:</p>
+                    <p>Updated the interactive webpage to **remove the tabbed interface**, presenting all dialogue turns and insights on a single, scrollable page for continuous narrative flow.</p>
+                </div>
+            </div>
+
+            <div class="dialogue-card">
+                <h2 class="text-2xl font-bold mb-4">Turn 23: Adding Final Python Script to Webpage</h2>
+                <div class="user-query">
+                    <p class="font-semibold mb-2">User Query:</p>
+                    <p>That's great, now add the final python script at the end!</p>
+                </div>
+                <div class="gemini-response-summary">
+                    <p class="font-semibold mb-2">Gemini's Response Summary:</p>
+                    <p>Modified the webpage to **include the complete final Python script** (`poker_scraper.py`) at the very end of the document for easy reference and review.</p>
+                </div>
+            </div>
+
+            <div class="dialogue-card">
+                <h2 class="text-2xl font-bold mb-4">Turn 24: Prettier Python Script Formatting on Webpage</h2>
+                <div class="user-query">
+                    <p class="font-semibold mb-2">User Query:</p>
+                    <p>Is there a way to make the python prettier and not word-wrap?</p>
+                </div>
+                <div class="gemini-response-summary">
+                    <p class="font-semibold mb-2">Gemini's Response Summary:</p>
+                    <p>Adjusted the CSS for code blocks (`.code-block-inner`) by setting **`white-space: pre;` and `word-wrap: normal;`** to prevent word-wrapping and enable horizontal scrolling, improving readability of the embedded Python script.</p>
+                </div>
+            </div>
+
+            <div class="dialogue-card">
+                <h2 class="text-2xl font-bold mb-4">Turn 25: Including All Dialogue Turns (Correction)</h2>
+                <div class="user-query">
+                    <p class="font-semibold mb-2">User Query:</p>
+                    <p>Please include all the turns, up to and including this one.</p>
+                </div>
+                <div class="gemini-response-summary">
+                    <p class="font-semibold mb-2">Gemini's Response Summary:</p>
+                    <p>Updated the webpage to include all dialogue turns up to the request, providing a complete chronological record of our collaboration.</p>
+                </div>
+            </div>
+
+            ---
+
+            <div class="final-script-container">
+                <h2 class="text-2xl font-bold mb-4 text-center">Final Python Script: `poker_scraper.py`</h2>
+                <p class="mb-4 text-gray-700">This is the complete and final version of the Python script we developed, incorporating all the discussed features, fixes, and refinements. Note that it's embedded as plain text; true syntax highlighting would require additional JavaScript libraries, which are outside the current scope.</p>
+                <div class="code-block-inner">
+```python
+import os
+import pickle
+from google.auth.transport.requests import Request
+from google_auth_oauthlib.flow import InstalledAppFlow
+from googleapiclient.discovery import build
+import re
+import base64
+import json
+
+# --- API Authentication and Fetching Functions ---
+
+def authenticate_gmail_api():
+    """Authenticates with Gmail API and returns the service object."""
+    SCOPES = ['[https://www.googleapis.com/auth/gmail.readonly](https://www.googleapis.com/auth/gmail.readonly)']
+    creds = None
+    if os.path.exists('token.pickle'):
+        with open('token.pickle', 'rb') as token:
+            creds = pickle.load(token)
+    if not creds or not creds.valid:
+        if creds and creds.expired and creds.refresh_token:
+            creds.refresh(Request())
+        else:
+            flow = InstalledAppFlow.from_client_secrets_file(
+                'credentials.json', SCOPES)
+            creds = flow.run_local_server(port=0)
+        with open('token.pickle', 'wb') as token:
+            pickle.dump(creds, token)
+    service = build('gmail', 'v1', credentials=creds)
+    return service
+
+def fetch_initial_message_metas(service, query='subject:"Results"'):
+    """Fetches initial email metadata (id, threadId) matching the query."""
+    messages_meta = []
+    response = service.users().messages().list(userId='me', q=query).execute()
+    messages_meta.extend(response.get('messages', []))
+    while 'nextPageToken' in response:
+        page_token = response['nextPageToken']
+        response = service.users().messages().list(userId='me', q=query,
+                                                    pageToken=page_token).execute()
+        messages_meta.extend(response.get('messages', []))
+    return messages_meta
+
+def get_thread_messages(service, thread_id):
+    """Retrieves all full message payloads within a specific thread."""
+    thread = service.users().threads().get(userId='me', id=thread_id).execute()
+    messages = thread.get('messages', [])
+    return messages
+
+# --- Email Content Extraction and Parsing Functions ---
+
+def get_email_content(service, message_id):
+    """Retrieves the plain text content of a specific email.
+    
+    This function remains the same as it correctly extracts the text/plain part.
+    """
+    msg = service.users().messages().get(userId='me', id=message_id, format='full').execute()
+    payload = msg['payload']
+    parts = payload.get('parts', [])
+    data = ''
+    for part in parts:
+        if part['mimeType'] == 'text/plain':
+            data = part['body']['data']
+            break
+    if not data and 'body' in payload and 'data' in payload['body']:
+        data = payload['body']['data']
+    
+    if data:
+        decoded_data = base64.urlsafe_b64decode(data).decode('utf-8')
+        return decoded_data
+    return ""
+
+def extract_email_info(service, msg_id):
+    """Fetches full message, extracts subject and plain text content.
+    Returns (subject, content) or (None, None) if an error occurs.
+    """
+    try:
+        full_msg = service.users().messages().get(userId='me', id=msg_id, format='full').execute()
+        
+        subject = "No Subject Found"
+        for header in full_msg['payload']['headers']:
+            if header['name'] == 'Subject':
+                subject = header['value']
+                break
+        
+        content = get_email_content(service, msg_id)
+        return subject, content
+    except Exception as e:
+        print(f"[ERROR] Error fetching or extracting info for message ID {msg_id}: {e}")
+        return None, None
+
+def parse_poker_results(email_content):
+    """
+    Parses the email content to extract player winnings/losings, ignoring links.
+    Adds requested amounts to the requester's total.
+    Subtracts contributed amounts from the contributor's total.
+    Handles multi-line contributions with links.
+    """
+    player_balances = {}
+    
+    # Regex for the request header (e.g., @player requests $X from:)
+    request_pattern = re.compile(r'@([\w-]+?)(?: <[^>]+?>)? requests \$([0-9.]+?) from:')
+    
+    # Adjusted contribution_pattern to use \s* for flexible leading whitespace
+    # This will ensure the whole name is captured.
+    contribution_pattern = re.compile(r'\s*\$([0-9.]+?) @([\w-]+)(?: \(web\))?')
+
+    lines = email_content.split('\n')
+    current_requester = None
+    
+    i = 0
+    while i < len(lines):
+        line = lines[i].strip()
+        
+        requester_match = request_pattern.match(line)
+        if requester_match:
+            current_requester = requester_match.group(1)
+            amount_requested = float(requester_match.group(2))
+            
+            # Rule 1: Add X to @player1's total
+            player_balances[current_requester] = player_balances.get(current_requester, 0.0) + amount_requested
+            i += 1 # Move to the next line
+            continue
+
+        if current_requester:
+            contribution_match = contribution_pattern.match(line)
+            if contribution_match:
+                amount_contributed = float(contribution_match.group(1))
+                contributing_player = contribution_match.group(2)
+                
+                # Rule 2 & 3: Subtract Y/Z from @player2/player3's total
+                player_balances[contributing_player] = player_balances.get(contributing_player, 0.0) - amount_contributed
+                
+                # --- NEW LOGIC: Consume subsequent link lines ---
+                j = i + 1
+                while j < len(lines):
+                    next_line = lines[j].strip()
+                    # Check for standalone link or (web <link>) on the next lines
+                    is_standalone_link = re.fullmatch(r'<https?://[^>]+>', next_line)
+                    is_web_link_format = re.fullmatch(r'\(web <https?://[^>]+>\)', next_line)
+
+                    if is_standalone_link or is_web_link_format:
+                        j += 1 # Move to the next line in the inner loop
+                    else:
+                        break # Not a link, so this contribution block ends
+                i = j # Update the main loop's index to skip the consumed link lines
+                continue # Continue the outer while loop (do not increment i again at end of outer loop)
+            else:
+                # If a line doesn't match a contribution, and we were expecting one,
+                # it means the request block has ended.
+                current_requester = None
+        
+        i += 1 # Increment outer loop index if no specific match or processing occurred
+                
+    return player_balances
+
+def process_single_email_for_poker_data(subject, email_content):
+    """
+    Extracts relevant poker content and parses it.
+    Returns a dictionary of daily results or None if no valid data found.
+    """
+    content = email_content.replace('\r', '')
+
+    relevant_content = ""
+    # Modified regex to match 4 to 6 digits (\d{4,6})
+    match = re.search(r'Results \d{4,6}:\s*\n*(.*)', content, re.DOTALL)
+    if match:
+        relevant_content = match.group(1).strip()
+    
+    if not relevant_content:
+        return None
+
+    daily_results = parse_poker_results(relevant_content)
+    if not daily_results:
+        return None
+    
+    return daily_results
+
+# --- Main Orchestration Function ---
+
+def main():
+    service = authenticate_gmail_api()
+    
+    # Updated the query to search for "Cash Game Tonight" and filter by date
+    # The date format for Gmail API is YYYY/MM/DD
+    search_query = 'subject:"Cash Game Tonight" after:2025/07/01'
+    initial_messages_meta = fetch_initial_message_metas(service, query=search_query)
+    
+    print(f"Found {len(initial_messages_meta)} initial messages matching the criteria.")
+
+    all_player_winnings = {}
+    processed_thread_ids = set() # To avoid processing the same thread multiple times
+
+    for msg_meta in initial_messages_meta:
+        thread_id = msg_meta['threadId']
+
+        # Skip if this thread has already been processed
+        if thread_id in processed_thread_ids:
+            continue
+
+        thread_messages_meta = get_thread_messages(service, thread_id)
+        
+        # Add thread_id to the set of processed threads
+        processed_thread_ids.add(thread_id)
+
+        for message_in_thread_meta in thread_messages_meta:
+            msg_id = message_in_thread_meta['id']
+            
+            subject, email_content = extract_email_info(service, msg_id)
+            if subject is None: # Error during extraction
+                print(f"[ERROR] Skipping message {msg_id} due to extraction error.")
+                continue
+
+            # Print the subject of the email
+            print(f"--- Processing Email Subject: '{subject}' ---")
+
+            daily_results = process_single_email_for_poker_data(subject, email_content)
+            
+            if daily_results:
+                # Pretty print daily_results if they exist
+                print(f"Daily results for '{subject}':\n{json.dumps(daily_results, indent=4)}")
+                for player, amount in daily_results.items():
+                    all_player_winnings[player] = all_player_winnings.get(player, 0.0) + amount
+            else:
+                print(f"No poker results found in email: '{subject}'.")
+
+    print("\n--- Final Total Winnings/Losings per Player ---")
+    if not all_player_winnings:
+        print("No poker winnings/losings data found across all processed emails.")
+    else:
+        for player, total_amount in all_player_winnings.items():
+            print(f"@{player}: ${total_amount:.2f}")
+
+if __name__ == '__main__':
+    main()
+
+
